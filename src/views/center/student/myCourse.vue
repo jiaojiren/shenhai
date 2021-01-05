@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #f2f2f2">
+  <div class="centerbg">
     <Tabbar whichItem="0" />
     <div class="center">
       <div class="left">

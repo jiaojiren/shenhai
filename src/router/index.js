@@ -67,6 +67,11 @@ const routes = [
     component: () => import('@/views/main/TalentsTransport')
   },
   {
+    path: '/talentsTransportTrain',
+    name: 'TalentsTransportTrain',
+    component: () => import('@/views/main/TalentsTransportTrain')
+  },
+  {
     path: '/mediaInformationDetail',
     name: 'MediaInformationDetail',
     component: () => import('@/views/detail/MediaInformationDetail')
@@ -117,7 +122,115 @@ const routes = [
     name: 'MyResult',
     component: () => import('@/views/center/student/myResult')
   },
-  
+  // 企业
+  {
+    path: '/myCompany',
+    name: 'MyCompany',
+    component: () => import('@/views/center/company/myCompany'),
+    children: [
+      {
+        path: 'setting',//以“/”开头的嵌套路径会被当作根路径，所以子路由上不用加“/”;
+        name: 'Setting',
+        meta: {
+          fixPosition: true, // 跳转时页面不自动置顶
+        },
+        component: () => import('@/views/center/company/setting'),
+      },
+      {
+        path: 'mema',
+        name: 'Mema',
+        meta: {
+          fixPosition: true,
+        },
+        component: () => import('@/views/center/company/mema'),
+      }
+    ]
+  },
+  // 设备商
+  {
+    path: '/myMemaCompany',
+    name: 'MyMemaCompany',
+    component: () => import('@/views/center/memaCompany/myMemaCompany'),
+    children: [
+      {
+        path: 'memaSetting',//以“/”开头的嵌套路径会被当作根路径，所以子路由上不用加“/”;
+        name: 'MemaSetting',
+        meta: {
+          fixPosition: true, // 跳转时页面不自动置顶
+        },
+        component: () => import('@/views/center/memaCompany/memaSetting'),
+      },
+      {
+        path: 'memaCooperate',
+        name: 'MemaCooperate',
+        meta: {
+          fixPosition: true,
+        },
+        component: () => import('@/views/center/memaCompany/memaCooperate'),
+      },
+      {
+        path: 'memaTool',
+        name: 'MemaTool',
+        meta: {
+          fixPosition: true,
+        },
+        component: () => import('@/views/center/memaCompany/memaTool'),
+      },
+      {
+        path: 'memaBase',
+        name: 'MemaBase',
+        meta: {
+          fixPosition: true,
+        },
+        component: () => import('@/views/center/memaCompany/memaBase'),
+      },
+      {
+        path: 'memaTrain',
+        name: 'MemaTrain',
+        meta: {
+          fixPosition: true,
+        },
+        component: () => import('@/views/center/memaCompany/memaTrain'),
+      }
+    ]
+  },
+  {
+    path: '/addCooperator',
+    name: 'AddCooperator',
+    component: () => import('@/views/center/memaCompany/addCooperator'),
+  },
+  // 后台管理
+  // 公司
+  {
+    path: '/console/Company',
+    name: 'ConsoleCompany',
+    component: () => import('@/views/console/company/CompanyDefault'),
+  },
+  {
+    path: '/console/UserManage',
+    name: 'UserManage',
+    component: () => import('@/views/console/company/UserManage'),
+  },
+  {
+    path: '/console/MemaManage',
+    name: 'MemaManage',
+    component: () => import('@/views/console/company/MemaManage'),
+  },
+  {
+    path: '/console/DeviceManage',
+    name: 'DeviceManage',
+    component: () => import('@/views/console/company/DeviceManage'),
+  },
+  {
+    path: '/console/BaseManage',
+    name: 'BaseManage',
+    component: () => import('@/views/console/company/BaseManage'),
+  },
+  {
+    path: '/console/addCooperator',
+    name: 'ConsoleAddCooperator',
+    component: () => import('@/views/console/company/addCooperator'),
+  },
 ]
 
 const router = new VueRouter({

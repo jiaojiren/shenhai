@@ -51,6 +51,7 @@
             ></Input>
           </FormItem>
           <div style="text-align: center">
+            <Button style="margin-right: 50px" @click="$router.go(-1)">取消</Button>
             <Button type="primary" @click="handleSubmit('formItem')"
               >提交修改</Button
             >
@@ -174,6 +175,7 @@ export default {
 
 <style lang='less' scoped>
 .forgotPass {
+  height: calc(100vh - 80px);
   background-color: #f1f1f1;
   padding: 50px 0;
   .forgotPass-wrap {

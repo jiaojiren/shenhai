@@ -4,10 +4,10 @@
     <div class="talent-transport">
       <div class="left">
         <div class="bar">
-          <div class="active" @click="goCenterList('TalentsTransport')">
-            岗位需求
+          <div @click="goCenterList('TalentsTransport')">岗位需求</div>
+          <div class="active" @click="goCenterList('TalentsTransportTrain')">
+            实训需求
           </div>
-          <div @click="goCenterList('TalentsTransportTrain')">实训需求</div>
         </div>
         <div class="filter-more">
           <div class="box">
@@ -89,23 +89,20 @@
           </div>
         </div>
         <div class="list">
-          <p>岗位推荐</p>
+          <p>实训基地</p>
           <div class="wrap">
             <div class="item">
               <div class="item1">
-                <span class="title">机械维修</span>
-                <span>AA设备BFD-2355</span>
+                <span class="title">XX实训基地</span>
+                <span>青岛 - 市南区</span>
                 <span>需求200人</span>
-                <span class="like">匹配度：99%</span>
               </div>
               <div class="item2">
-                <span>4K-8K</span>
-                <span>青岛-市南区</span>
-                <span>3-5年</span>
-                <span>招聘2人</span>
+                <span>AA设备BFD-2355</span>
+                <span>AA设备BFD-2355</span>
               </div>
               <div class="item3">
-                <Tag>五险一金</Tag><Tag>周末双休</Tag><Tag>餐补</Tag>
+                <span>实训时间：2020-12-30-2021-12-30</span>
               </div>
               <div class="item4">
                 <div class="company">xxxx股份有限公司</div>
@@ -118,26 +115,23 @@
                   <Button size="small"
                     ><Icon type="md-star-outline" />收藏</Button
                   ><Button size="small" type="primary" style="margin-left: 10px"
-                    >投递简历</Button
+                    >去报名</Button
                   >
                 </div>
               </div>
             </div>
             <div class="item">
               <div class="item1">
-                <span class="title">机械维修</span>
-                <span>AA设备BFD-2355</span>
+                <span class="title">XX实训基地</span>
+                <span>青岛 - 市南区</span>
                 <span>需求200人</span>
-                <span class="like">匹配度：99%</span>
               </div>
               <div class="item2">
-                <span>4K-8K</span>
-                <span>青岛-市南区</span>
-                <span>3-5年</span>
-                <span>招聘2人</span>
+                <span>AA设备BFD-2355</span>
+                <span>AA设备BFD-2355</span>
               </div>
               <div class="item3">
-                <Tag>五险一金</Tag><Tag>周末双休</Tag><Tag>餐补</Tag>
+                <span>实训时间：2020-12-30-2021-12-30</span>
               </div>
               <div class="item4">
                 <div class="company">xxxx股份有限公司</div>
@@ -150,7 +144,7 @@
                   <Button size="small"
                     ><Icon type="md-star-outline" />收藏</Button
                   ><Button size="small" type="primary" style="margin-left: 10px"
-                    >投递简历</Button
+                    >去报名</Button
                   >
                 </div>
               </div>
@@ -159,21 +153,6 @@
         </div>
       </div>
       <div class="right">
-        <div class="item1">
-          <p class="head">简历管理</p>
-          <div>完善线上简历</div>
-        </div>
-        <div class="item2">
-          <p class="head">附件管理</p>
-          <div class="myresume">
-            <Icon type="md-document" /> 
-            <span>我的简历.pdf</span>
-            <Icon style="float: right; line-height: 20px" :size="18" type="ios-trash" />
-          </div>
-          <div class="btn">
-            <Button long type="primary">上传简历</Button>
-          </div>
-        </div>
         <div class="item3">
           <p class="head">实训基地</p>
           <div class="content">
@@ -365,9 +344,6 @@ export default {
               color: #333;
               font-size: 16px;
             }
-            .like {
-              color: #f59a23;
-            }
             span {
               margin-right: 30px;
             }
@@ -402,36 +378,6 @@ export default {
   .right {
     width: 280px;
     margin-left: 20px;
-    .item1 {
-      background-color: #fff;
-      .head {
-        text-align: center;
-        font-size: 18px;
-        padding: 5px 0;
-        border-bottom: 1px solid #ddd;
-      }
-      div {
-        color: #02a7f0;
-        font-size: 16px;
-        padding: 10px;
-      }
-    }
-    .item2 {
-      margin: 10px 0;
-      background-color: #fff;
-      .head {
-        text-align: center;
-        font-size: 18px;
-        padding: 5px 0;
-        border-bottom: 1px solid #ddd;
-      }
-      .myresume {
-        padding: 10px;
-      }
-      .btn {
-        padding: 10px;
-      }
-    }
     .item3 {
       background-color: #fff;
       .head {

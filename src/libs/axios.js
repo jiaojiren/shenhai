@@ -12,7 +12,8 @@ class HttpRequest {
     const config = {
       baseURL: this.publicPath,
       headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json;charset=UTF-8',
+        // 'Authorization': 'BasicAuth' + localStorage.getItem('token')
       }
     }
     return config

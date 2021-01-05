@@ -1,148 +1,161 @@
 <template>
   <div>
     <!-- <Tabbar whichItem="0" /> -->
-    <div style="background-color: #f1f1f1; padding: 20px 0 50px;">
-
-
-    <div class="register">
-      <div class="register-wrap">
-        <p>新用户注册</p>
-        <Form
-          ref="formItem"
-          :model="formItem"
-          :label-width="150"
-          :rules="ruleInline"
-        >
-          <FormItem prop="preType" label="用户类型">
-            <Select v-model="formItem.preType" style="width: 300px">
-              <Option value="1">学校</Option>
-              <Option value="2">企业</Option>
-            </Select>
-          </FormItem>
-          <FormItem
-            v-if="formItem.preType == 2"
-            label="企业名称："
-            prop="companyName"
+    <div style="background-color: #f1f1f1; padding: 20px 0 50px">
+      <div class="register">
+        <div class="register-wrap">
+          <p>新用户注册</p>
+          <Form
+            ref="formItem"
+            :model="formItem"
+            :label-width="180"
+            :rules="ruleInline"
           >
-            <Input
-              v-model="formItem.companyName"
-              placeholder="请输入企业名称"
-              style="width: 300px"
-            ></Input>
-          </FormItem>
-          <FormItem
-            v-if="formItem.preType == 2"
-            label="统一社会信用代码："
-            prop="creditCode"
-          >
-            <Input
-              v-model="formItem.creditCode"
-              placeholder="请输入企业统一社会信用代码"
-              style="width: 300px"
-            ></Input>
-          </FormItem>
+            <FormItem prop="TypeID1" label="用户类型">
+              <Select v-model="formItem.TypeID1" style="width: 300px">
+                <Option :value="1">企业</Option>
+                <Option :value="2">学校</Option>
+              </Select>
+            </FormItem>
 
-          <FormItem
-            v-if="formItem.preType == 1"
-            label="学校名称："
-            prop="schoolName"
-          >
-            <Input
-              v-model="formItem.schoolName"
-              placeholder="请输入学校名称"
-              style="width: 300px"
-            ></Input>
-          </FormItem>
-          <FormItem label="用户名" prop="name">
-            <Input v-model="formItem.name" placeholder="请输入用户名" style="width: 300px"></Input>
-          </FormItem>
-          <FormItem label="手机号：" prop="mobile">
-            <Input
-              v-model="formItem.mobile"
-              placeholder="请输入手机号码"
-              style="width: 300px"
-            ></Input>
-          </FormItem>
-          <FormItem label="验证码：">
-            <Row>
-              <Col span="13">
-                <FormItem prop="veryCode">
-                  <Input
-                    v-model="formItem.veryCode"
-                    placeholder="请输入验证码"
-                  ></Input>
-                </FormItem>
-              </Col>
-              <Col span="5">
-                <img
-                  style="margin-left: 10px; width: auto; height: 31px"
-                  @click="getVeryCode()"
-                  :src="publicPath + '/webLcUser/getVeryCode'"
-                  id="randomImg"
-                />
-              </Col>
-            </Row>
-          </FormItem>
-          <FormItem label="邮箱：" prop="mail">
-            <Input v-model="formItem.mail" placeholder="请输入邮箱" style="width: 300px"></Input>
-          </FormItem>
-          <FormItem label="密码：" prop="password">
-            <Input
-              v-model="formItem.password"
-              type="password"
-              placeholder="请输入密码"
-              style="width: 300px"
-            ></Input>
-          </FormItem>
-          <FormItem label="重复密码：" prop="pwdCheck">
-            <Input
-              v-model="formItem.pwdCheck"
-              type="password"
-              placeholder="请重复输入密码"
-              style="width: 300px"
-            ></Input>
-          </FormItem>
-          <div style="text-align: center">
-            <Button type="primary" @click="handleSubmit('formItem')"
-              >提交注册</Button
+            <!-- 企业-------------------------------------------------------------------------- -->
+            <FormItem
+              label="企业类别"
+              :key="'key1'"
+              v-if="formItem.TypeID1 == 1"
             >
-          </div>
-        </Form>
+              <RadioGroup v-model="formItem.TypeID2">
+                <Radio label="1">普通公司</Radio>
+                <Radio label="2">设备厂</Radio>
+              </RadioGroup>
+            </FormItem>
+            <FormItem
+              v-if="formItem.TypeID1 == 1"
+              :key="'key2'"
+              label="企业名称："
+              prop="CompName"
+            >
+              <Input
+                v-model="formItem.CompName"
+                placeholder="请输入企业名称"
+                style="width: 300px"
+              ></Input>
+            </FormItem>
+            <FormItem
+              :key="'key3'"
+              v-if="formItem.TypeID1 == 1"
+              label="统一社会信用代码："
+              prop="CreditCode"
+            >
+              <Input
+                v-model="formItem.CreditCode"
+                placeholder="请输入企业统一社会信用代码"
+                style="width: 300px"
+              ></Input>
+            </FormItem>
+
+            <!-- 学校---------------------------------------------------------------------------->
+            <FormItem label="类别：" v-if="formItem.TypeID1 == 2" :key="'key4'">
+              <RadioGroup v-model="formItem.TypeID2">
+                <Radio label="1">教师</Radio>
+                <Radio label="2">学生</Radio>
+                <Radio label="3">学校</Radio>
+              </RadioGroup>
+            </FormItem>
+
+            <!-- 用户名 手机 邮箱 验证码 密码----------------------------------------------------------------------------- -->
+            <FormItem label="用户名：" prop="UserName">
+              <Input
+                v-model="formItem.UserName"
+                placeholder="请输入用户名"
+                style="width: 300px"
+              ></Input>
+            </FormItem>
+            <FormItem label="手机号：" prop="Phone">
+              <Input
+                v-model="formItem.Phone"
+                placeholder="请输入手机号码"
+                style="width: 300px"
+              ></Input>
+            </FormItem>
+            <FormItem label="邮箱：" prop="Email">
+              <Input
+                v-model="formItem.Email"
+                placeholder="请输入邮箱"
+                style="width: 300px"
+              ></Input>
+            </FormItem>
+
+            <FormItem label="密码：" prop="Password">
+              <Input
+                v-model="formItem.Password"
+                type="password"
+                placeholder="请输入6-20位字母+数字的组合密码"
+                style="width: 300px"
+              ></Input>
+            </FormItem>
+            <FormItem label="重复密码：" prop="pwdCheck">
+              <Input
+                v-model="formItem.pwdCheck"
+                type="password"
+                placeholder="请重复输入密码"
+                style="width: 300px"
+              ></Input>
+            </FormItem>
+            <FormItem label="验证码：" prop="veryCode">
+              <Input
+                v-model="formItem.veryCode"
+                placeholder="请输入验证码"
+                style="width: 200px"
+              ></Input>
+              <img
+                style="margin-left: 10px; width: auto; height: 31px"
+                @click="getVeryCode()"
+                :src="$publicPath + '/webLcUser/getVeryCode'"
+                id="randomImg"
+              />
+            </FormItem>
+            <div style="text-align: center">
+              <Button style="margin-right: 50px" @click="$router.go(-1)"
+                >返回</Button
+              >
+              <Button type="primary" @click="handleSubmit('formItem')"
+                >提交注册</Button
+              >
+            </div>
+          </Form>
+        </div>
       </div>
     </div>
   </div>
-      </div>
 </template>
 <script>
+import { register } from "@/api";
 import Tabbar from "@/components/tabbar";
 export default {
   data() {
     // 异步校验
     const asyValidCompanyName = (rule, value, callback) => {
-      if (!value) {
+      if (value === "") {
         return callback(new Error("请输入统一社会信用编码"));
+      } else {
+        return callback();
       }
-      // if (!Number.isInteger(value)) {
-      //   return callback(new Error("请输入数字"));
-      // }
-      if (this.formItem.companyName == "") {
-        return callback(new Error("请输入企业名称校验"));
-      }
-      checkCompanyName({
-        companyName: this.formItem.companyName,
-        creditCode: value,
-      }).then((res) => {
-        if (res.isSuccess) {
-          if (res.data) {
-            return callback();
-          } else {
-            return callback(new Error("与企业名称不对应，请确认"));
-          }
-        } else {
-          this.$Message.warning(res.msg);
-          return callback(new Error("校验出错"));
-        }
-      });
+      // checkCompanyName({
+      //   companyName: this.formItem.CompName,
+      //   creditCode: value,
+      // }).then((res) => {
+      //   if (res.isSuccess) {
+      //     if (res.data) {
+      //       return callback();
+      //     } else {
+      //       return callback(new Error("与企业名称不对应，请确认"));
+      //     }
+      //   } else {
+      //     this.$Message.warning(res.msg);
+      //     return callback(new Error("校验出错"));
+      //   }
+      // });
     };
     const validateVeryCode = (rule, value, callback) => {
       if (value === "") {
@@ -161,6 +174,8 @@ export default {
     const validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
+      } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(value)) {
+        callback(new Error("密码必须是由6-20位字母+数字组合"));
       } else {
         if (this.formItem.pwdCheck !== "") {
           // 对第二个密码框单独验证
@@ -172,7 +187,7 @@ export default {
     const validatePassCheck = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入你的密码"));
-      } else if (value !== this.formItem.password) {
+      } else if (value !== this.formItem.Password) {
         callback(new Error("密码不匹配，请重新输入"));
       } else {
         callback();
@@ -190,31 +205,40 @@ export default {
     return {
       value2: 0,
       formItem: {
-        password: "",
+        Password: "",
         pwdCheck: "",
-        mobile: "",
+        Phone: "",
         veryCode: "",
-        preType: "1",
-        type: null,
-        companyName: "",
-        schoolName: "",
-        name: "",
-        creditCode: "",
-        mail: "",
+        TypeID1: 1,
+        TypeID2: "1",
+        CompName: "",
+        UserName: "",
+        CreditCode: "",
+        Email: "",
       },
       ruleInline: {
-        creditCode: [{ validator: asyValidCompanyName, trigger: "blur" }],
-        mobile: [{ validator: validatePhone, trigger: "blur" }],
-        password: [{ validator: validatePass, trigger: "blur" }],
-        pwdCheck: [{ validator: validatePassCheck, trigger: "blur" }],
-        mail: [{ required: true, trigger: "blur" }],
-        veryCode: [{ validator: validateVeryCode, trigger: "blur" }],
-        companyName: [
+        CreditCode: [
+          { required: true, validator: asyValidCompanyName, trigger: "blur" },
+        ],
+        Phone: [{ required: true, validator: validatePhone, trigger: "blur" }],
+        Password: [
+          { required: true, validator: validatePass, trigger: "blur" },
+        ],
+        pwdCheck: [
+          { required: true, validator: validatePassCheck, trigger: "blur" },
+        ],
+        Email: [
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+          { type: "email", message: "邮箱格式不正确", trigger: "blur" },
+        ],
+        veryCode: [
+          { required: true, validator: validateVeryCode, trigger: "blur" },
+        ],
+        CompName: [
           { required: true, message: "请输入企业名称", trigger: "blur" },
         ],
-        name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        schoolName: [
-          { required: true, message: "请输入学校名称", trigger: "blur" },
+        UserName: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
         ],
       },
     };
@@ -226,7 +250,7 @@ export default {
     getVeryCode() {
       $("#randomImg").attr(
         "src",
-        this.publicPath + "/webLcUser/getVeryCode?random=" + Math.random()
+        $publicPath + "/webLcUser/getVeryCode?random=" + Math.random()
       );
     },
     handleSubmit(name) {
@@ -235,6 +259,19 @@ export default {
           this.handRegister();
         } else {
           return;
+        }
+      });
+    },
+    handRegister() {
+      register(this.formItem).then((res) => {
+        if (res.ercode == 0) {
+          this.$Message.success("注册成功");
+          setTimeout(() => {
+            //延时加载页面
+            this.$router.push({ path: "/login" });
+          }, 500);
+        } else {
+          this.$Message.warning(res.msg);
         }
       });
     },

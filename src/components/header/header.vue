@@ -44,7 +44,8 @@
                 @mouseleave="userInfoHide"
               >
                 <a @click="toCenter">个人中心</a>
-                <a>退出登录</a>
+                <a @click="toManage">后台管理</a>
+                <a @click="logout">退出登录</a>
               </div>
             </ul>
           </div>
@@ -55,14 +56,28 @@
 </template>
 
 <script>
+import {state, mutation} from '@/store'
+import {logout} from '@/api'
 export default {
   data() {
     return {
-      isLogin: true,
       userInfoIsShow: false,
     };
   },
+  computed: {
+    isLogin(){
+      return state.isLogin
+      // return true
+    }
+  },
   methods: {
+    logout(){
+      logout().then(res=>{
+        if(res.ercode == 0){
+          mutation.logout()
+        }
+      })
+    },
     userInfoShow() {
       this.userInfoIsShow = true;
     },
@@ -70,7 +85,10 @@ export default {
       this.userInfoIsShow = false;
     },
     toCenter(){
-      this.$router.push({path: '/userSetting'})
+      this.$router.push({path: '/myMemaCompany/memaSetting'})
+    },
+    toManage(){
+      this.$router.push({path: '/console/Company'})
     },
   },
 };

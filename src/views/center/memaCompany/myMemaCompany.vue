@@ -1,21 +1,14 @@
 <template>
   <div class="centerbg">
     <Tabbar whichItem="0" />
-    <div class="center">
-      <div class="left">
-        <Stubar num="5"/>
-      </div>
-      <div class="right">
-
-      </div>
-    </div>
-
+    <Companytop/>
+    <router-view></router-view>
     <div style="height: 50px"></div>
   </div>
 </template>
 <script>
 import Tabbar from "@/components/tabbar";
-import Stubar from '@/components/center/stuBar'
+import Companytop from '@/components/center/companytop'
 export default {
   data() {
     return {
@@ -24,7 +17,7 @@ export default {
   },
   components: {
     Tabbar,
-    Stubar
+    Companytop,
   },
   mounted() {
   },

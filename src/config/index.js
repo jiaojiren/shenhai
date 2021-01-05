@@ -5,11 +5,11 @@ export default {
    */
   publicPath: {
     dev: '/api',
-    pro: 'http://klink.haier.net/zlzy',
+    pro: 'http://192.168.1.117:32680/api',
   },
   baseUrl: {
     dev: 'http://localhost:8081',
-    pro: 'http://klink.haier.net',
+    pro: 'http://192.168.1.140',
   }
 
 }

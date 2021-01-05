@@ -4,7 +4,7 @@
     <div class="login">
       <div class="login-wrap">
         <div class="login-left">
-          <p style="margin-bottom: 20px">欢迎登录</p>
+          <p style="margin-bottom: 20px; font-size: 26px">欢迎登录</p>
           <p>莘海教育产教融合平台</p>
         </div>
         <div class="login-right">
@@ -15,19 +15,21 @@
             :model="formItem"
             :rules="rule"
           >
-            <FormItem prop="mobile">
+            <FormItem prop="UserName">
               <Input
                 size="large"
-                v-model="formItem.mobile"
+                v-model="formItem.UserName"
                 prefix="md-person"
                 placeholder="请输入用户名/手机号"
               ></Input>
             </FormItem>
-            <FormItem prop="password">
+            <FormItem prop="Password">
               <Input
+                type="password"
+                password
                 size="large"
                 prefix="md-lock"
-                v-model="formItem.password"
+                v-model="formItem.Password"
                 placeholder="请输入登录密码"
               ></Input>
             </FormItem>
@@ -42,12 +44,18 @@
                 >
               </div>
             </FormItem>
-            <FormItem>
+            <FormItem style="text-align: center">
               <Button
                 size="large"
-                long
+                style="border-radius: 10px; margin-right: 15px"
+                @click="$router.go(-1)"
+              >
+                返回
+              </Button>
+              <Button
+                size="large"
                 type="primary"
-                style="border-radius: 50px"
+                style="border-radius: 10px"
                 @click="handleSubmit('formItem')"
                 >登陆</Button
               >
@@ -59,6 +67,8 @@
   </div>
 </template>
 <script>
+import { login } from "@/api";
+import { state, mutation } from "@/store";
 import Tabbar from "@/components/tabbar";
 export default {
   data() {
@@ -74,18 +84,18 @@ export default {
     return {
       keyText: "",
       formItem: {
-        mobile: "",
-        password: "",
+        UserName: "",
+        Password: "",
       },
       rule: {
-        mobile: [
+        UserName: [
           {
             required: true,
             message: "用户名/手机号不能为空",
             trigger: "blur",
           },
         ],
-        password: [
+        Password: [
           {
             required: true,
             message: "密码不能为空",
@@ -97,14 +107,14 @@ export default {
   },
   methods: {
     ForgotPass() {
-      this.$router.push({path: '/forgotPass'})
+      this.$router.push({ path: "/forgotPass" });
     },
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
           login(this.formItem).then((res) => {
-            if (res.isSuccess) {
-              this.$Message.success(res.data);
+            if (res.ercode == 0) {
+              this.$Message.success(res.msg);
               this.handUserInfo();
               this.$router.push({ path: "/" });
             } else {
@@ -114,17 +124,9 @@ export default {
         }
       });
     },
+    // 检测是否登录
     handUserInfo() {
-      webAuthUserInfo().then((res) => {
-        console.log(res);
-        if (res.isSuccess) {
-          this.updateLoginStatus(res.data);
-        }
-      });
-    },
-    updateLoginStatus(data) {
-      state.userInfo = data;
-      state.isLogin = true;
+      mutation.checkLogin();
     },
   },
 };
@@ -143,7 +145,7 @@ export default {
   align-items: center;
   .login-wrap {
     width: 600px;
-    height: 300px;
+    // height: 300px;
     overflow: hidden;
     border-radius: 38px;
     display: flex;
@@ -163,14 +165,17 @@ export default {
         margin: 20px 10px 0 10px;
         padding-bottom: 10px;
         border-bottom: 1px solid #ddd;
-        font-size: 15px;
-        color: #ff9900;
-        font-weight: 500;
+        font-size: 16px;
+        color: #17233d;
+        font-weight: 00;
+        text-align: center;
       }
       .login-form {
         padding: 20px;
         /deep/ .ivu-form-item {
-          margin-bottom: 20px;
+          &:nth-child(4) {
+            margin-bottom: 10px;
+          }
         }
       }
     }

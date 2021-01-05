@@ -4,14 +4,16 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "vue-cli-service build --mode production",
+    "lint": "vue-cli-service lint",
+    "buildtar": "npm run build & cd dist & jar -cvf edu-prod.war ./*"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "less": "^4.0.0",
     "less-loader": "^7.1.0",
+    "v-distpicker": "^1.2.9",
     "view-design": "^4.4.0",
     "vue": "^2.6.11",
     "vue-content-placeholders": "^0.2.1",

@@ -1,5 +1,9 @@
-// 个人中心
+// 背景色
+@centerbg-color: #f2f2f2;
+.centerbg { background-color: @centerbg-color }
+// 学校个人中心
 .center {
+  background-color: #fff;
   width: 1200px;
   margin: 0 auto;
   margin-top: 20px;
@@ -13,5 +17,66 @@
     flex: 1;
     padding: 10px 50px;
     background-color: #fff;
+  }
+}
+
+// 企业个人中心
+.ccenter {
+  width: 1200px;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: flex;
+  .left {
+    // padding: 0 0 20px 0;
+    background-color: #fff;
+    width: 900px;
+    margin-right: 20px;
+  }
+  .right {
+    width: 280px;
+    .btn {
+      height: 40px;
+      line-height: 40px;
+      font-size: 25px;
+      cursor: pointer;
+      background-color: rgba(22, 155, 213, 1);
+      border-radius: 5px;
+      text-align: center;
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .table {
+      background-color: #fff;
+      p {
+        height: 50px;
+        font-size: 18px;
+        font-weight: bold;
+        border-bottom: 1px solid #ccc;
+        line-height: 50px;
+        padding-left: 20px;
+      }
+      .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        .item {
+          width: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 10px 0;
+          &:nth-child(1) {
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #eee;
+          }
+          &:nth-child(2) {
+            border-bottom: 1px solid #eee;
+          }
+          &:nth-child(3) {
+            border-right: 1px solid #eee;
+          }
+        }
+      }
+    }
   }
 }

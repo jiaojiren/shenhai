@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <ComNav num="5"></ComNav>
+      <SchNav num="1"></SchNav>
       <div class="manage">
         <div class="int1">
           <div class="left">
@@ -11,38 +11,38 @@
                 :class="[type == 1 ? 'active' : '']"
                 @click="toggle(1)"
               >
-                基地管理
+                学习统计
               </div>
               <div
                 class="item"
                 :class="[type == 2 ? 'active' : '']"
                 @click="toggle(2)"
               >
-                实训需求
+                实习统计
               </div>
               <div
                 class="item"
                 :class="[type == 3 ? 'active' : '']"
                 @click="toggle(3)"
               >
-                入厂申请
+                毕业统计
               </div>
             </div>
           </div>
           <div class="right">
             <div class="filter">
               <div class="item">
-                <span>设备系列：</span>
-                <Input placeholder="输入设备系列" />
+                <span>学生姓名：</span>
+                <Input placeholder="输入学生姓名" />
               </div>
               <div class="item">
-                <span>设备型号：</span>
-                <Input placeholder="输入手机号" />
+                <span>学生学号：</span>
+                <Input placeholder="输入学生学号" />
               </div>
               <div class="item">
-                <span>课程状态：</span>
+                <span>专业：</span>
                 <Select style="width: 80px">
-                  <Option :value="1">可授课</Option>
+                  <Option :value="1">专业1</Option>
                 </Select>
               </div>
               <div class="item">
@@ -53,7 +53,7 @@
 
             <div class="head">
               <div>共1000条记录</div>
-              <Button type="primary">添加设备信息</Button>
+              <Button type="primary">导出excel</Button>
             </div>
             <div class="table">
               <Table border :columns="column" :data="tableData"></Table>
@@ -66,57 +66,65 @@
 </template>
 
 <script>
-import ComNav from "@/components/console/comNav";
+import SchNav from "@/components/console/schNav";
 export default {
   data() {
     return {
-      formItem: {
-        name: "山东蓝翔",
-        code: "12842132761",
-        address: "山东省青岛市区路",
-        area: "经营范围",
-        xingzhi: "jjj",
-        leixing: "hhh",
-      },
       type: 1,
       column: [
         {
-          title: "基地名称",
+          type: "index",
+          title: "序号",
+          align: "center",
+          width: "70px",
+        },
+        {
+          title: "姓名",
           align: "center",
           key: "name",
         },
         {
-          title: "区域",
+          title: "学号",
           align: "center",
           key: "time",
         },
         {
-          title: "联系人",
+          title: "专业",
           align: "center",
           key: "date",
         },
         {
-          title: "联系方式",
+          title: "设备系列",
           align: "center",
           key: "check",
         },
         {
-          title: "规模",
+          title: "设备型号",
           align: "center",
           key: "jigou",
         },
         {
-          title: "主要设备",
+          title: "学习进度",
           align: "center",
           key: "link",
         },
         {
-          title: "操作",
+          title: "阶段考试分数",
           align: "center",
-          width: "200",
+          key: "link",
+        },
+        {
+          title: "结课考试分数",
+          align: "center",
+          key: "link",
+        },
+        {
+          title: "认证结果",
+          align: "center",
+          width: '200',
           render: (h, params) => {
             var edit = h(
-              "Button",
+              "div",
               {
                 props: {
                   type: "primary",
@@ -129,10 +137,10 @@ export default {
                   click: () => {},
                 },
               },
-              "编辑"
+              "无认证"
             );
             var del = h(
-              "Button",
+              "a",
               {
                 props: {
                   type: "error",
@@ -157,31 +165,10 @@ export default {
                   },
                 },
               },
-              "删除"
+              "查看认证"
             );
-
-            return h("div", [edit, del]);
-          },
-        },
-
-        {
-          title: "查看详情",
-          align: "center",
-          width: "100",
-          render: (h, params) => {
-            return h(
-              "a",
-              {
-                props: {
-                  type: "primary",
-                  size: "small",
-                },
-                on: {
-                  click: () => {},
-                },
-              },
-              "查看"
-            );
+          
+            return h("div", [del]);
           },
         },
       ],
@@ -198,7 +185,7 @@ export default {
     };
   },
   components: {
-    ComNav,
+    SchNav,
   },
   methods: {
     chooseUser() {},

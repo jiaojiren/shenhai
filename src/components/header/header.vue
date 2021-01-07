@@ -88,6 +88,7 @@ export default {
       this.$router.push({path: '/myMemaCompany/memaSetting'})
     },
     toManage(){
+      // this.$router.push({path: '/console/studentManage'})
       this.$router.push({path: '/console/Company'})
     },
   },

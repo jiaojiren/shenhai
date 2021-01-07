@@ -3,7 +3,7 @@
     <div class="bar">
       <div :class="[ num==1 ? 'active' : '' ]" @click="goCenterList('MemaSetting')">账号设置</div>
       <div :class="[ num==2 ? 'active' : '' ]" @click="goCenterList('MemaCooperate')">合作公司</div>
-      <div :class="[ num==3 ? 'active' : '' ]" @click="goCenterList('MemaTool')">我的设备</div>
+      <div :class="[ num==3 ? 'active' : '' ]" @click="goCenterList('MemaCourse')">我的设备</div>
       <div :class="[ num==4 ? 'active' : '' ]" @click="goCenterList('MemaBase')">我的基地</div>
       <div :class="[ num==5 ? 'active' : '' ]" @click="goCenterList('MemaTrain')">我的培训</div>
     </div>

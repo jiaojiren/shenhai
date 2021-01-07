@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <ComNav num="2"></ComNav>
+      <SchNav num="5"></SchNav>
       <div class="manage">
         <div class="int1">
           <div class="left">
@@ -11,61 +11,57 @@
                 :class="[type == 1 ? 'active' : '']"
                 @click="toggle(1)"
               >
-                普通用户
+                考试设置
               </div>
               <div
                 class="item"
                 :class="[type == 2 ? 'active' : '']"
                 @click="toggle(2)"
               >
-                销售账号
+                考试统计
+              </div>
+              <div
+                class="item"
+                :class="[type == 3 ? 'active' : '']"
+                @click="toggle(3)"
+              >
+                阅卷管理
               </div>
             </div>
           </div>
           <div class="right">
             <div class="filter">
               <div class="item">
-                <span>账号ID：</span>
-                <Input
-                  v-model="queryCondition.UserName"
-                  placeholder="输入账号ID"
-                />
-              </div>
-              <div class="item">
-                <span>手机号：</span>
-                <Input
-                  v-model="queryCondition.Phone"
-                  placeholder="输入手机号"
-                />
-              </div>
-              <div class="item">
-                <span>姓名：</span>
-                <Input v-model="queryCondition.Name" placeholder="输入姓名" />
-              </div>
-              <div class="item">
-                <span>是否为专家：</span>
-                <Select style="width: 80px" v-model="queryCondition.IsExpert">
-                  <Option :value="0">否</Option>
-                  <Option :value="1">是</Option>
+                <span>考试类型：</span>
+                <Select style="width: 80px">
+                  <Option :value="1">阶段考试</Option>
                 </Select>
               </div>
               <div class="item">
-                <Button @click="GetCompanyList" type="primary">搜索</Button>
-                <Button style="margin-left: 10px" @click="reset">重置</Button>
+                <span>设备系列：</span>
+                <Input placeholder="输入设备系列" />
+              </div>
+              <div class="item">
+                <span>设备型号：</span>
+                <Input placeholder="输入设备型号" />
+              </div>
+              <div class="item">
+                <Button type="primary">搜索</Button>
+                <Button style="margin-left: 10px">重置</Button>
               </div>
             </div>
 
             <div class="head">
               <div>共1000条记录</div>
-              <Button type="primary" @click="toNewUser">新建用户</Button>
+              <div>
+                <Button type="primary" style="margin-right: 10px"
+                  >新增考试</Button
+                >
+                <Button type="primary">导出excel</Button>
+              </div>
             </div>
             <div class="table">
-              <Table
-                border
-                :columns="column"
-                :data="tableData"
-                :loading="isLoading"
-              ></Table>
+              <Table border :columns="column" :data="tableData"></Table>
             </div>
           </div>
         </div>
@@ -75,26 +71,10 @@
 </template>
 
 <script>
-import {
-  companyMemberPageList,
-  companyMemeberStatus,
-
-} from "@/api";
-import ComNav from "@/components/console/comNav";
+import SchNav from "@/components/console/schNav";
 export default {
   data() {
     return {
-      
-      isLoading: false,
-      queryCondition: {
-        UserName: "",
-        Name: "",
-        Phone: "",
-        IsExpert: null,
-        TypeID2: null,
-        pageNo: 1,
-        pageSize: 10,
-      },
       type: 1,
       column: [
         {
@@ -104,99 +84,45 @@ export default {
           width: "70px",
         },
         {
-          title: "账号ID",
+          title: "设备型号",
           align: "center",
-          key: "UserName",
+          key: "name",
         },
         {
-          title: "用户姓名",
+          title: "设备系列",
           align: "center",
-          key: "Name",
+          key: "time",
         },
         {
-          title: "部门",
+          title: "学习人数",
           align: "center",
-          key: "Department",
+          key: "date",
         },
         {
-          title: "专家",
+          title: "考试类型",
           align: "center",
-          key: "IsExpert",
-          width: "70px",
+          key: "jigou",
         },
         {
-          title: "手机号",
+          title: "考试时间",
           align: "center",
-          key: "Phone",
+          key: "link",
         },
         {
-          title: "最近登录",
+          title: "通过分数",
           align: "center",
-          key: "LastLoginDate",
+          key: "link",
         },
         {
-          title: "创建时间",
+          title: "题库",
           align: "center",
-          key: "CreateDate",
+          key: "link",
         },
         {
           title: "操作",
           align: "center",
-          width: "200",
+          width: "190",
           render: (h, params) => {
-            var activ1 = h(
-              "Button",
-              {
-                props: {
-                  size: "small",
-                },
-                style: {
-                  marginRight: "5px",
-                },
-                on: {
-                  click: () => {
-                    companyMemeberStatus({
-                      pk_Account: params.row.pk_Account,
-                    }).then((res) => {
-                      if (res.ercode == 0) {
-                        this.$Message.success(res.data);
-                        this.GetCompanyList();
-                      } else {
-                        this.$Message.error(res.msg);
-                      }
-                    });
-                  },
-                },
-              },
-              "启用"
-            );
-            var activ2 = h(
-              "Button",
-              {
-                props: {
-                  type: "warning",
-                  size: "small",
-                },
-                style: {
-                  marginRight: "5px",
-                },
-                on: {
-                  click: () => {
-                    companyMemeberStatus({
-                      pk_Account: params.row.pk_Account,
-                    }).then((res) => {
-                      if (res.ercode == 0) {
-                        this.$Message.success(res.data);
-                        this.GetCompanyList();
-                      } else {
-                        this.$Message.error(res.msg);
-                      }
-                    });
-                  },
-                },
-              },
-              "禁用"
-            );
             var edit = h(
               "Button",
               {
@@ -212,6 +138,34 @@ export default {
                 },
               },
               "编辑"
+            );
+            var down = h(
+              "Button",
+              {
+                props: {
+                  type: "error",
+                  size: "small",
+                },
+                style: {
+                  marginRight: "5px",
+                },
+                on: {
+                  click: () => {
+                    consolCorDeleteByPk({
+                      pk_Company_Cor: params.row.pk_Company_Cor,
+                    }).then((res) => {
+                      if (res.ercode == 0) {
+                        this.$Message.success(res.data);
+                        this.Condition.pageNo = 1;
+                        this.GetConsolCorPageList();
+                      } else {
+                        this.$Message.error(res.msg);
+                      }
+                    });
+                  },
+                },
+              },
+              "下架"
             );
             var del = h(
               "Button",
@@ -241,66 +195,67 @@ export default {
               },
               "删除"
             );
-            let activ = null;
-            if (params.row.TypeID2 == 3) {
-              activ = null;
-            } else if (params.row.TypeID2 == 4) {
-              activ = params.row.StatusID == 0 ? activ1 : activ2;
-            }
-            return h("div", [edit, activ, del]);
+            return h("div", [edit, down, del]);
+          },
+        },
+        {
+          title: "查看详情",
+          align: "center",
+          width: "200",
+          render: (h, params) => {
+            var del = h(
+              "a",
+              {
+                props: {
+                  type: "error",
+                  size: "small",
+                },
+                style: {
+                  marginRight: "5px",
+                },
+                on: {
+                  click: () => {
+                    consolCorDeleteByPk({
+                      pk_Company_Cor: params.row.pk_Company_Cor,
+                    }).then((res) => {
+                      if (res.ercode == 0) {
+                        this.$Message.success(res.data);
+                        this.Condition.pageNo = 1;
+                        this.GetConsolCorPageList();
+                      } else {
+                        this.$Message.error(res.msg);
+                      }
+                    });
+                  },
+                },
+              },
+              "查看详情"
+            );
+
+            return h("div", [del]);
           },
         },
       ],
-      tableData: [],
+      tableData: [
+        {
+          name: "jjj",
+          time: "jjj",
+          date: "jjj",
+          check: "jjj",
+          jigou: "jjj",
+          link: "jjj",
+        },
+      ],
     };
   },
   components: {
-    ComNav,
-  },
-  mounted() {
-    if (Number(this.$route.query.type)) {
-      this.type = Number(this.$route.query.type);
-    }
-    this.queryCondition.TypeID2 = this.type == 1 ? "3" : "4";
-    this.GetCompanyList();
+    SchNav,
   },
   methods: {
-    // 重置
-    reset() {
-      this.queryCondition = {
-        UserName: "",
-        Name: "",
-        Phone: "",
-        IsExpert: null,
-        TypeID2: null,
-        pageNo: 1,
-        pageSize: 10,
-      };
-      this.queryCondition.TypeID2 = this.type == 1 ? "3" : "4";
-      this.GetCompanyList()
-    },
-
-    // 用户列表
-    GetCompanyList() {
-      this.isLoading = true;
-      companyMemberPageList(this.queryCondition).then((res) => {
-        this.isLoading = false;
-        if (res.ercode == 0) {
-          this.tableData = res.data.entities;
-        }
-      });
-    },
     chooseUser() {},
     toggle(value) {
       this.type = value;
-      this.queryCondition.TypeID2 = this.type == 1 ? "3" : "4";
-      this.GetCompanyList();
-    },
-    toNewUser() {
-      this.$router.push({
-        path: "/console/addUser",
-        query: { type: this.type },
-      });
+      //....
     },
   },
 };
@@ -335,8 +290,7 @@ export default {
       background-color: #fff;
       margin-left: 10px;
       padding: 20px;
-      flex-basis: 0;
-      flex-grow: 1;
+      flex: 1;
       .filter {
         display: flex;
         .item {

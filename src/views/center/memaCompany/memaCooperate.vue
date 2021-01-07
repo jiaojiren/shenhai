@@ -14,9 +14,13 @@
                 /><img v-else src="@/assets/images/no_image.jpg" alt="" />
               </div>
               <div class="pro">
-                <p class="title">{{ item.PartyBInfo.CompanyName }}</p>
+                <p class="title" @click="goDetail(item.pk_Company_Cor)">
+                  {{ item.PartyBInfo.CompanyName }}
+                </p>
                 <div class="status">
-                  <Tag color="blue">{{ item.PartyBInfo.StatusID }}</Tag>
+                  <Tag color="blue">{{
+                    formatStatus(item.PartyBInfo.StatusID)
+                  }}</Tag>
                 </div>
                 <div class="type">
                   <span style="margin-right: 40px"
@@ -43,15 +47,15 @@
                 >
               </div>
             </div>
-            <div style="text-align: right; margin-top: 10px;">
-            <Page
-              :total="entityCount"
-              :page-size="Condition.pageSize"
-              :show-total="true"
-              :current="Condition.pageNo"
-              @on-change="changePage"
-            />
-          </div>
+            <div style="text-align: right; margin-top: 10px">
+              <Page
+                :total="entityCount"
+                :page-size="Condition.pageSize"
+                :show-total="true"
+                :current="Condition.pageNo"
+                @on-change="changePage"
+              />
+            </div>
           </div>
         </div>
         <div class="right">
@@ -97,18 +101,33 @@ export default {
   components: {
     MemaComBar,
   },
+  computed: {
+    formatStatus() {
+      return (value) => {
+        if (value == 1) {
+          return "合作中";
+        } else {
+          return "已结束";
+        }
+      };
+    },
+  },
   mounted() {
     this.GetcorPageList();
   },
   methods: {
+    // 详情页
+    goDetail(id) {
+      this.$router.push({ path: "/detailCooperator", query: { id: id } });
+    },
     showModal(id) {
       this.modal = true;
       this.pk_id = id;
-      this.list.forEach((item,i)=>{
-        if(item.pk_Company_Cor == id) {
-          this.Remark = item.Remark
+      this.list.forEach((item, i) => {
+        if (item.pk_Company_Cor == id) {
+          this.Remark = item.Remark;
         }
-      })
+      });
     },
     // 编辑备注
     editRemark() {
@@ -116,7 +135,7 @@ export default {
         (res) => {
           if (res.ercode == 0) {
             this.$Message.success(res.data);
-            this.GetcorPageList()
+            this.GetcorPageList();
           } else {
             this.$Message.error(res.msg);
           }
@@ -138,16 +157,17 @@ export default {
       corPageList(this.Condition).then((res) => {
         if (res.ercode == 0) {
           this.list = res.data.entities;
-          this.entityCount = res.data.entityCount
+
+          this.entityCount = res.data.entityCount;
         }
       });
     },
     addCooperate() {
       this.$router.push({ name: "AddCooperator" });
     },
-    changePage(pageNo){
-      this.Condition.pageNo = pageNo
-      this.GetcorPageList()
+    changePage(pageNo) {
+      this.Condition.pageNo = pageNo;
+      this.GetcorPageList();
     },
   },
 };
@@ -166,6 +186,11 @@ export default {
       img {
         width: 100%;
         height: 100%;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+          transform: scale(1.1);
+        }
       }
     }
     .pro {
@@ -175,6 +200,10 @@ export default {
         color: #333;
         font-weight: bold;
         font-size: 16px;
+        cursor: pointer;
+        &:hover {
+          color: #2b85e4;
+        }
       }
       .status {
         margin: 10px 0 20px 0;

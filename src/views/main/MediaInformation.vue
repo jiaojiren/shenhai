@@ -161,7 +161,7 @@ export default {
           this.mediaInfoLabel = res.data;
           this.queryCondition.CategoryID = this.$route.params.id
             ? Number(this.$route.params.id)
-            : this.mediaInfoLabel[0].pk_Category;
+            : 0
           this.QueryNewsList();
         }
       });

@@ -321,36 +321,19 @@ export default {
       cooperateForm: {
         CompanyName: "",
         CreditCode: "",
-        Address: "地址地址地址",
-        CompType: "国企",
-        CompIndustry: "行业行业",
-        CompBusiness: "经营范围",
-        CompLogo:
-          "http://192.168.1.117:32680/api/file/Image2?id=1609781478.png",
-        CompAltasList: [
-          "http://192.168.1.117:32680/api/file/Image2?id=1609781478.png",
-          "http://192.168.1.117:32680/api/file/Image2?id=1609781478.png",
-        ],
+        Address: "",
+        CompType: "",
+        CompIndustry: "",
+        CompBusiness: "",
+        CompLogo: "",
+        CompAltasList: [],
         StatusID: "1",
-        ContactNameCor: "陈",
-        ContactPhoneCor: "15768561181",
-        StartTime: "2021/01/04 13:05:00",
-        CorMachineList: ["1111", "2222"],
-        CorInfoList: [
-          {
-            Name: "1111111111111111111111111111111111111111",
-            ApplyUser: "zhang",
-            ApplyDate: "2020-10-12",
-            CorInfoFileList: ['http://192.168.1.117:32680/api/file/Image2?id=1609783314.png','http://192.168.1.117:32680/api/file/Image2?id=1609783318.png'],
-          },
-          {
-            Name: "333",
-            ApplyUser: "zhang",
-            ApplyDate: "2020-10-12",
-            CorInfoFileList: ['http://192.168.1.117:32680/api/file/Image2?id=1609783314.png'],
-          },
-        ],
-        Remark: "备注",
+        ContactNameCor: "",
+        ContactPhoneCor: "",
+        StartTime: "",
+        CorMachineList: [],
+        CorInfoList: [],
+        Remark: "",
       },
       rule: {
         CompanyName: [
@@ -387,19 +370,19 @@ export default {
     },
   },
   methods: {
-    allSave(){
-      console.log(this.cooperateForm)
-      addCompanyCor(this.cooperateForm).then(res=>{
-        if(res.ercode == 0){
-          this.$Message.success(res.data)
-        }else {
-          this.$Message.error(res.msg)
+    allSave() {
+      console.log(this.cooperateForm);
+      addCompanyCor(this.cooperateForm).then((res) => {
+        if (res.ercode == 0) {
+          this.$Message.success(res.data);
+        } else {
+          this.$Message.error(res.msg);
         }
-      })
+      });
     },
     submitInfo() {
-      this.cooperateForm.CorInfoList.push(this.infoForm)
-      console.log(this.cooperateForm.CorInfoList)
+      this.cooperateForm.CorInfoList.push(this.infoForm);
+      console.log(this.cooperateForm.CorInfoList);
     },
     deleteInfo(index) {
       this.cooperateForm.CorInfoList.splice(index, 1);
@@ -415,7 +398,7 @@ export default {
       // console.log(this.dateTransform)
     },
     TransDate2(date) {
-      this.infoForm.ApplyDate = date
+      this.infoForm.ApplyDate = date;
       // console.log(this.dateTransform)
     },
     searchCompany() {
@@ -424,7 +407,14 @@ export default {
         CreditCode: this.cooperateForm.CreditCode,
       }).then((res) => {
         if (res.ercode == 0) {
-          console.log(res.data);
+          this.cooperateForm.CompanyName = res.data.CompanyName;
+          this.cooperateForm.CreditCode = res.data.CreditCode;
+          this.cooperateForm.Address = res.data.Address;
+          this.cooperateForm.CompType = res.data.CompType;
+          this.cooperateForm.CompIndustry = res.data.CompIndustry;
+          this.cooperateForm.CompBusiness = res.data.CompBusiness;
+          this.cooperateForm.CompLogo = res.data.CompLogo;
+          this.cooperateForm.ComCompAltasListpLogo = res.data.CompAltasList;
         } else {
           this.$Message.warn("暂无记录");
         }

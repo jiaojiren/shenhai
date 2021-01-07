@@ -51,7 +51,7 @@
               <Button type="primary" @click="toAddMema">添加合作企业</Button>
             </div>
             <div class="table">
-              <Table border :columns="column" :data="tableData"></Table>
+              <Table border :columns="column" :data="tableData" :loading="isLoading"></Table>
               <div style="text-align: right; margin-top: 10px;">
             <Page
               :total="entityCount"
@@ -70,11 +70,12 @@
 </template>
 
 <script>
-import { consolCorPageList } from "@/api";
+import { consolCorPageList, consolCorDeleteByPk, corGetCompIndustryList } from "@/api";
 import ComNav from "@/components/console/comNav";
 export default {
   data() {
     return {
+      isLoading: false,
       entityCount: null,
       Condition: {
         pageNo: 1,
@@ -190,7 +191,17 @@ export default {
                   marginRight: "5px",
                 },
                 on: {
-                  click: () => {},
+                  click: () => {
+                    consolCorDeleteByPk({pk_Company_Cor: params.row.pk_Company_Cor}).then(res=>{
+                      if(res.ercode == 0){
+                        this.$Message.success(res.data)
+                        this.Condition.pageNo = 1;
+                         this.GetConsolCorPageList();
+                      }else {
+                        this.$Message.error(res.msg)
+                      }
+                    })
+                  },
                 },
               },
               "删除"
@@ -231,13 +242,21 @@ export default {
     this.GetConsolCorPageList();
   },
   methods: {
+    //获取行业分类
+    getIndustryLabel(){
+      corGetCompIndustryList().then(res=>{
+        console.log(res)
+      })
+    },
     // 添加合作企业
     toAddMema(){
       this.$router.push({name: 'ConsoleAddCooperator'})
     },
     // 获取列表
     GetConsolCorPageList() {
+      this.isLoading = true
       consolCorPageList(this.Condition).then((res) => {
+        this.isLoading = false
         if (res.ercode == 0) {
           let temp = [];
           res.data.entities.forEach((item,index)=>{

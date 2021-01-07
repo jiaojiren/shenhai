@@ -10,13 +10,12 @@ Vue.use(VueRouter)
 const routerPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location, onResolve, onReject) {
   if (onResolve || onReject) return routerPush.call(this, location, onResolve, onReject);
-  return routerPush.call(this, location).catch(error=> error)
+  return routerPush.call(this, location).catch(error => error)
 };
 
 
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'Index',
     component: Index
@@ -127,9 +126,8 @@ const routes = [
     path: '/myCompany',
     name: 'MyCompany',
     component: () => import('@/views/center/company/myCompany'),
-    children: [
-      {
-        path: 'setting',//以“/”开头的嵌套路径会被当作根路径，所以子路由上不用加“/”;
+    children: [{
+        path: 'setting', //以“/”开头的嵌套路径会被当作根路径，所以子路由上不用加“/”;
         name: 'Setting',
         meta: {
           fixPosition: true, // 跳转时页面不自动置顶
@@ -151,9 +149,8 @@ const routes = [
     path: '/myMemaCompany',
     name: 'MyMemaCompany',
     component: () => import('@/views/center/memaCompany/myMemaCompany'),
-    children: [
-      {
-        path: 'memaSetting',//以“/”开头的嵌套路径会被当作根路径，所以子路由上不用加“/”;
+    children: [{
+        path: 'memaSetting', //以“/”开头的嵌套路径会被当作根路径，所以子路由上不用加“/”;
         name: 'MemaSetting',
         meta: {
           fixPosition: true, // 跳转时页面不自动置顶
@@ -169,12 +166,12 @@ const routes = [
         component: () => import('@/views/center/memaCompany/memaCooperate'),
       },
       {
-        path: 'memaTool',
-        name: 'MemaTool',
+        path: 'memaCourse',
+        name: 'MemaCourse',
         meta: {
           fixPosition: true,
         },
-        component: () => import('@/views/center/memaCompany/memaTool'),
+        component: () => import('@/views/center/memaCompany/memaCourse'),
       },
       {
         path: 'memaBase',
@@ -198,6 +195,11 @@ const routes = [
     path: '/addCooperator',
     name: 'AddCooperator',
     component: () => import('@/views/center/memaCompany/addCooperator'),
+  },
+  {
+    path: '/detailCooperator',
+    name: 'DetailCooperator',
+    component: () => import('@/views/center/memaCompany/detailCooperator'),
   },
   // 后台管理
   // 公司
@@ -230,6 +232,39 @@ const routes = [
     path: '/console/addCooperator',
     name: 'ConsoleAddCooperator',
     component: () => import('@/views/console/company/addCooperator'),
+  },
+  {
+    path: '/console/addUser',
+    name: 'ConsoleAddUser',
+    component: () => import('@/views/console/company/addUser'),
+  },
+  
+
+  // 后台管理 学校
+  {
+    path: '/console/studentManage',
+    name: 'ConsoleStudentManage',
+    component: () => import('@/views/console/school/StudentManage'),
+  },
+  {
+    path: '/console/professionManage',
+    name: 'ConsoleProfessionManage',
+    component: () => import('@/views/console/school/ProfessionManage'),
+  },
+  {
+    path: '/console/courseManage',
+    name: 'ConsoleCourseManage',
+    component: () => import('@/views/console/school/CourseManage'),
+  },
+  {
+    path: '/console/memaManage',
+    name: 'ConsoleMemaManage',
+    component: () => import('@/views/console/school/MemaManage'),
+  },
+  {
+    path: '/console/testManage',
+    name: 'ConsoleTestManage',
+    component: () => import('@/views/console/school/TestManage'),
   },
 ]
 

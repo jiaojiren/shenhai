@@ -56,7 +56,7 @@
               <Button type="primary">导出excel</Button>
             </div>
             <div class="table">
-              <Table border :columns="column" :data="tableData"></Table>
+              <Table border :columns="column" :data="tableData" :loading="isLoading"></Table>
             </div>
           </div>
         </div>
@@ -71,6 +71,7 @@ export default {
   data() {
     return {
       type: 1,
+      isLoading: true,
       column: [
         {
           type: "index",
@@ -172,16 +173,7 @@ export default {
           },
         },
       ],
-      tableData: [
-        {
-          name: "jjj",
-          time: "jjj",
-          date: "jjj",
-          check: "jjj",
-          jigou: "jjj",
-          link: "jjj",
-        },
-      ],
+      tableData: [],
     };
   },
   components: {

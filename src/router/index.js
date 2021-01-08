@@ -71,10 +71,26 @@ const routes = [{
     component: () => import('@/views/main/TalentsTransportTrain')
   },
   {
+    path: '/talentsTransportComp',
+    name: 'TalentsTransportComp',
+    component: () => import('@/views/main/TalentsTransportComp')
+  },
+  {
     path: '/mediaInformationDetail',
     name: 'MediaInformationDetail',
-    component: () => import('@/views/detail/MediaInformationDetail')
+    component: () => import('@/views/main/MediaInformationDetail')
   },
+  {
+    path: '/publishJob',
+    name: 'PublishJob',
+    component: () => import('@/views/main/PublishJob')
+  },
+  {
+    path: '/detailResume',
+    name: 'DetailResume',
+    component: () => import('@/views/main/DetailResume')
+  },
+
   {
     path: '/register',
     name: 'Register',
@@ -257,7 +273,7 @@ const routes = [{
     component: () => import('@/views/console/school/CourseManage'),
   },
   {
-    path: '/console/memaManage',
+    path: '/console/memaComManage',
     name: 'ConsoleMemaManage',
     component: () => import('@/views/console/school/MemaManage'),
   },
@@ -265,6 +281,21 @@ const routes = [{
     path: '/console/testManage',
     name: 'ConsoleTestManage',
     component: () => import('@/views/console/school/TestManage'),
+  },
+  {
+    path: '/console/authenManage',
+    name: 'ConsoleAuthenManage',
+    component: () => import('@/views/console/school/AuthenManage'),
+  },
+  {
+    path: '/console/addTest',
+    name: 'ConsoleAddTest',
+    component: () => import('@/views/console/school/addTest'),
+  },
+  {
+    path: '/console/addProfession',
+    name: 'ConsoleAddProfession',
+    component: () => import('@/views/console/school/addProfession'),
   },
 ]
 

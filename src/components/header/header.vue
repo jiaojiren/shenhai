@@ -44,7 +44,7 @@
                 @mouseleave="userInfoHide"
               >
                 <a @click="toCenter">个人中心</a>
-                <a @click="toManage">后台管理</a>
+                <a @click="toManage" v-if="!isStudent">后台管理</a>
                 <a @click="logout">退出登录</a>
               </div>
             </ul>
@@ -68,6 +68,10 @@ export default {
     isLogin(){
       return state.isLogin
       // return true
+    },
+    // 是否为学生
+    isStudent (){
+      return state.userInfo.TypeID1 == 2 && state.userInfo.TypeID2 == 2
     }
   },
   methods: {
@@ -85,7 +89,11 @@ export default {
       this.userInfoIsShow = false;
     },
     toCenter(){
-      this.$router.push({path: '/myMemaCompany/memaSetting'})
+      if(state.userInfo.TypeID1 == 1){
+        this.$router.push({path: '/myMemaCompany/memaSetting'})
+      }else {
+        this.$router.push({path: '/userSetting'})
+      }  
     },
     toManage(){
       // this.$router.push({path: '/console/studentManage'})

@@ -6,7 +6,7 @@
       <div :class="[ num==3 ? 'active' : '' ]" @click="goCenterList('ConsoleCourseManage')">课程管理</div>
       <div :class="[ num==4 ? 'active' : '' ]" @click="goCenterList('ConsoleMemaManage')">设备厂管理</div>
       <div :class="[ num==5 ? 'active' : '' ]" @click="goCenterList('ConsoleTestManage')">考试管理</div>
-      <div :class="[ num==6 ? 'active' : '' ]">认证管理</div>
+      <div :class="[ num==6 ? 'active' : '' ]" @click="goCenterList('ConsoleAuthenManage')">认证管理</div>
     </div>
   </div>
 </template>

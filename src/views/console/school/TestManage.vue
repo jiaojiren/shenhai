@@ -54,14 +54,14 @@
             <div class="head">
               <div>共1000条记录</div>
               <div>
-                <Button type="primary" style="margin-right: 10px"
+                <Button type="primary" style="margin-right: 10px" @click="toAddTest"
                   >新增考试</Button
                 >
                 <Button type="primary">导出excel</Button>
               </div>
             </div>
             <div class="table">
-              <Table border :columns="column" :data="tableData"></Table>
+              <Table border :columns="column" :data="testData" :loading="isLoading"></Table>
             </div>
           </div>
         </div>
@@ -71,11 +71,21 @@
 </template>
 
 <script>
+import {pageListConExam, changeConSchExamStatus} from "@/api"
 import SchNav from "@/components/console/schNav";
 export default {
   data() {
     return {
       type: 1,
+      isLoading: false,
+      queryCondition: {
+        pageNo:1,
+        pageSize:10,
+        StartDate:"",
+        ExamTypeStr:"",
+        MachineSeries:0,
+        MachineName:""
+      },
       column: [
         {
           type: "index",
@@ -86,37 +96,69 @@ export default {
         {
           title: "设备型号",
           align: "center",
-          key: "name",
+          key: "MachineName",
         },
         {
           title: "设备系列",
           align: "center",
-          key: "time",
+          key: "MachineSeriesName",
         },
         {
           title: "学习人数",
           align: "center",
           key: "date",
+          width: '100'
         },
         {
           title: "考试类型",
           align: "center",
-          key: "jigou",
+          key: "ExamTypeStr",
         },
         {
           title: "考试时间",
           align: "center",
-          key: "link",
+          key: "StartDate",
         },
         {
           title: "通过分数",
           align: "center",
-          key: "link",
+          key: "PassLine",
+          width: '100'
         },
         {
           title: "题库",
           align: "center",
-          key: "link",
+          width: '100',
+          render: (h,params) => {
+            var edit = h(
+              "a",
+              {
+                props: {
+                  size: "small",
+                },
+                style: {
+                  marginRight: "5px",
+                },
+                on: {
+                  click: () => {
+                    consolCorDeleteByPk({
+                      pk_Company_Cor: params.row.pk_Company_Cor,
+                    }).then((res) => {
+                      if (res.ercode == 0) {
+                        this.$Message.success(res.data);
+                        this.Condition.pageNo = 1;
+                        this.GetConsolCorPageList();
+                      } else {
+                        this.$Message.error(res.msg);
+                      }
+                    });
+                  },
+                },
+              },
+              "编辑题库"
+            );
+            return h("div", [edit])
+          }
         },
         {
           title: "操作",
@@ -143,7 +185,7 @@ export default {
               "Button",
               {
                 props: {
-                  type: "error",
+                  type: "warning",
                   size: "small",
                 },
                 style: {
@@ -151,13 +193,12 @@ export default {
                 },
                 on: {
                   click: () => {
-                    consolCorDeleteByPk({
-                      pk_Company_Cor: params.row.pk_Company_Cor,
+                    changeConSchExamStatus({
+                      pk_Exam: params.row.pk_Exam,
                     }).then((res) => {
                       if (res.ercode == 0) {
                         this.$Message.success(res.data);
-                        this.Condition.pageNo = 1;
-                        this.GetConsolCorPageList();
+                        this.GetTextList();
                       } else {
                         this.$Message.error(res.msg);
                       }
@@ -166,6 +207,33 @@ export default {
                 },
               },
               "下架"
+            );
+            var up = h(
+              "Button",
+              {
+                props: {
+
+                  size: "small",
+                },
+                style: {
+                  marginRight: "5px",
+                },
+                on: {
+                  click: () => {
+                     changeConSchExamStatus({
+                      pk_Exam: params.row.pk_Exam,
+                    }).then((res) => {
+                      if (res.ercode == 0) {
+                        this.$Message.success(res.data);
+                        this.GetTextList();
+                      } else {
+                        this.$Message.error(res.msg);
+                      }
+                    })
+                  },
+                },
+              },
+              "上架"
             );
             var del = h(
               "Button",
@@ -195,13 +263,19 @@ export default {
               },
               "删除"
             );
-            return h("div", [edit, down, del]);
+            let updown = null
+            if(params.row.StatusID == 1){
+              updown = down
+            }else {
+              updown = up
+            }
+            return h("div", [edit, updown, del]);
           },
         },
         {
           title: "查看详情",
           align: "center",
-          width: "200",
+          width: "100",
           render: (h, params) => {
             var del = h(
               "a",
@@ -236,26 +310,32 @@ export default {
           },
         },
       ],
-      tableData: [
-        {
-          name: "jjj",
-          time: "jjj",
-          date: "jjj",
-          check: "jjj",
-          jigou: "jjj",
-          link: "jjj",
-        },
-      ],
+      testData: [],
     };
   },
   components: {
     SchNav,
   },
+  mounted(){
+    this.GetTextList()
+  },
   methods: {
-    chooseUser() {},
+    // 获取考试列表
+    GetTextList(){
+      this.isLoading = true
+      pageListConExam(this.queryCondition).then(res=>{
+        this.isLoading = false
+        if(res.ercode == 0){
+          this.testData = res.data.entities
+        }
+      })
+    },
     toggle(value) {
       this.type = value;
       //....
+    },
+    toAddTest(){
+      this.$router.push({path: '/console/addTest'})
     },
   },
 };

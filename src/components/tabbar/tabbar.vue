@@ -21,7 +21,8 @@
               </Dropdown>
             </MenuItem>
             <MenuItem name="5" to="/mediaInformation"> 媒体与资讯 </MenuItem>
-            <MenuItem name="6" to="/talentsTransport"> 人才输送 </MenuItem>
+            <MenuItem v-if="isCompany" name="6" to="/talentsTransportComp"> 人才输送 </MenuItem>
+            <MenuItem v-else name="6" to="/talentsTransport"> 人才输送 </MenuItem>
           </Menu>
         </div>
       </div>
@@ -29,12 +30,21 @@
   </div>
 </template>
 <script>
+import {state} from '@/store'
 export default {
   props: {
     whichItem: {
       type: String,
       default: "",
     },
+  },
+  computed: {
+    isCompany() {
+      return(state.userInfo.TypeID1 == 1)
+    }
+  },
+  mounted() {
+
   },
   methods: {
     ModeJump(name) {

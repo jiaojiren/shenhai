@@ -308,6 +308,57 @@ export const removeCourseConSchool = (data) => {
     data
   })
 }
+// 考试列表
+export const pageListConExam = (data) => {
+  return axios.request({
+    url: '/consoleExam/pageList',
+    method: 'post',
+    data
+  })
+}
+//上下架考试
+export const changeConSchExamStatus = (data) => {
+  return axios.request({
+    url: '/consoleExam/changeStatus',
+    method: 'post',
+    data
+  })
+}
+//新建/更新专家
+export const saveSchoolMemberUser = (data) => {
+  return axios.request({
+    url: '/consoleAccount/saveSchoolMemberUser',
+    method: 'post',
+    data
+  })
+}
+//专家列表
+export const schoolMemberPageList = (data) => {
+  return axios.request({
+    url: '/consoleAccount/schoolMemberPageList',
+    method: 'post',
+    data
+  })
+}
+// 删除学校专家
+export const schoolMemeberDelete = (data) => {
+  return axios.request({
+    url: '/consoleAccount/schoolMemeberDelete',
+    method: 'post',
+    data
+  })
+}
+//获取学校专家详情
+export const schoolMemeberDetail = (data) => {
+  return axios.request({
+    url: '/consoleAccount/schoolMemeberDetail',
+    method: 'post',
+    data
+  })
+}
+
+
+
 
 
 

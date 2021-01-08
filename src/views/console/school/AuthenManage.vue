@@ -1,22 +1,39 @@
 <template>
   <div>
     <div>
-      <SchNav num="4"></SchNav>
+      <SchNav num="6"></SchNav>
       <div class="manage">
         <div class="int1">
           <div class="right">
             <div class="filter">
               <div class="item">
-                <span>设备厂名称：</span>
-                <Input placeholder="输入姓设备厂名称" />
-              </div>
-              <div class="item">
-                <span>规模：</span>
-                <Select style="width: 80px">
-                  <Option :value="1">0-20人</Option>
+                <span>设备系列：</span>
+                <Select style="width: 180px">
+                  <Option :value="1">设备系列1</Option>
                 </Select>
               </div>
-
+              <div class="item">
+                <span>设备型号：</span>
+                <Input placeholder="输入设备型号" />
+              </div>
+              <div class="item">
+                <span>考试类型：</span>
+                <Select style="width: 180px">
+                  <Option :value="1">阶段考试</Option>
+                </Select>
+              </div>
+              <div class="item">
+                <span>考试阶段分数：</span>
+                <Select style="width: 180px">
+                  <Option :value="1">0~60分</Option>
+                </Select>
+              </div>
+              <div class="item">
+                <span>证书类型：</span>
+                <Select style="width: 180px">
+                  <Option :value="1">优秀证书</Option>
+                </Select>
+              </div>
               <div class="item">
                 <Button type="primary">搜索</Button>
                 <Button style="margin-left: 10px">重置</Button>
@@ -74,139 +91,58 @@ export default {
           width: "70px",
         },
         {
-          title: "设备厂名称",
+          title: "学生姓名",
           align: "center",
           key: "CompanyName",
           tooltip: "true",
         },
         {
-          title: "地址",
+          title: "学号",
           align: "center",
           key: "CompType",
           tooltip: "true",
         },
         {
-          title: "规模",
+          title: "专业",
           align: "center",
           key: "CompIndustry",
           tooltip: "true",
         },
         {
-          title: "设备课程数",
+          title: "设备系列",
           align: "center",
           key: "CompIndustry",
           tooltip: "true",
         },
         {
-          title: "合作厂商数",
+          title: "设备型号",
           align: "center",
           key: "CompIndustry",
           tooltip: "true",
         },
         {
-          title: "操作",
+          title: "考试类型",
           align: "center",
-          width: '200',
-          render: (h, params) => {
-            var edit = h(
-              "Button",
-              {
-                props: {
-                  type: "primary",
-                  size: "small",
-                },
-                style: {
-                  marginRight: "5px",
-                },
-                on: {
-                  click: () => {},
-                },
-              },
-              "编辑"
-            );
-            var black = h(
-              "Button",
-              {
-                props: {
-                  type: "warning",
-                  size: "small",
-                },
-                style: {
-                  marginRight: "5px",
-                },
-                on: {
-                  click: () => {},
-                },
-              },
-              "拉黑"
-            );
-            var del = h(
-              "Button",
-              {
-                props: {
-                  type: "error",
-                  size: "small",
-                },
-                style: {
-                  marginRight: "5px",
-                },
-                on: {
-                  click: () => {
-                    consolCorDeleteByPk({
-                      pk_Company_Cor: params.row.pk_Company_Cor,
-                    }).then((res) => {
-                      if (res.ercode == 0) {
-                        this.$Message.success(res.data);
-                        this.Condition.pageNo = 1;
-                        this.GetConsolCorPageList();
-                      } else {
-                        this.$Message.error(res.msg);
-                      }
-                    });
-                  },
-                },
-              },
-              "删除"
-            );
-            return h("div", [edit, black, del]);
-          },
+          key: "CompIndustry",
+          tooltip: "true",
         },
         {
-          title: "查看详情",
+          title: "考试时间",
           align: "center",
-          width: "200",
-          render: (h, params) => {
-            var del = h(
-              "a",
-              {
-                props: {
-                  type: "error",
-                  size: "small",
-                },
-                style: {
-                  marginRight: "5px",
-                },
-                on: {
-                  click: () => {
-                    consolCorDeleteByPk({
-                      pk_Company_Cor: params.row.pk_Company_Cor,
-                    }).then((res) => {
-                      if (res.ercode == 0) {
-                        this.$Message.success(res.data);
-                        this.Condition.pageNo = 1;
-                        this.GetConsolCorPageList();
-                      } else {
-                        this.$Message.error(res.msg);
-                      }
-                    });
-                  },
-                },
-              },
-              "查看详情"
-            );
-
-            return h("div", [del]);
-          },
+          key: "CompIndustry",
+          tooltip: "true",
+        },
+        {
+          title: "考试分数",
+          align: "center",
+          key: "CompIndustry",
+          tooltip: "true",
+        },
+        {
+          title: "证书",
+          align: "center",
+          key: "CompIndustry",
+          tooltip: "true",
         },
       ],
       tableData: [],
@@ -267,8 +203,10 @@ export default {
 
       .filter {
         display: flex;
+        flex-wrap: wrap;
         .item {
           margin-right: 30px;
+          margin-bottom: 20px;
           display: flex;
           span {
             white-space: nowrap;
